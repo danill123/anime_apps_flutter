@@ -16,10 +16,13 @@ class _splashscreenState extends State<splashscreen> {
   }
 
   startSplashScreen() async {
-    var duration = const Duration(seconds: 10);
+    var duration = const Duration(seconds: 2);
     return Timer(duration, () {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
-        return Homeview();
+        return MaterialApp(
+          color: Colors.white,
+          home: BottomNavPage(),
+        );
       }));
     });
   }

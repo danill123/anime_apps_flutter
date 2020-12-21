@@ -10,7 +10,8 @@ class Network {
     print("$url");
     Response response = await get(Uri.encodeFull(url));
     if (response.statusCode == 200) {
-      return json.encode(response.body);
+      var data = json.decode(response.body);
+      return data["data"];
     } else {
       print(response.statusCode);
     }

@@ -32,12 +32,10 @@ class _BottomNavPageState extends State<BottomNavPage> {
       selectedItemColor: Colors.blueAccent,
       unselectedItemColor: Colors.grey,
       onTap: _OnNavbarTapped,
+      elevation: 0,
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Navigation"),
-      ),
       body: Center(child: _listPage[_selectTabIndex]),
       bottomNavigationBar: _bottomNavBar,
     );

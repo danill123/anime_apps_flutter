@@ -1,5 +1,6 @@
 // import 'dart:html'; // -> caused error on compiled
 
+import 'package:anime_apps_flutter/screens/views/TrendingDetailPage.dart';
 import 'package:anime_apps_flutter/screens/views/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -125,8 +126,12 @@ Widget createCarouselList(List data, BuildContext context) {
             ),
             onTap: () {
               print("tested dude");
-              // Navigator.of(context).push(MaterialPageRoute(
-              //     builder: (context) => new DetailPage(data: this.data)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TrendingDetailPage(
+                            data_list: data[index],
+                          )));
             },
           ),
         );

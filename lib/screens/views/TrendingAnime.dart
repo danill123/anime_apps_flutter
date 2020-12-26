@@ -44,7 +44,7 @@ class _TrendingAnimeState extends State<TrendingAnime> {
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 // success will return
-                return createCarouselList(snapshot.data, context);
+                return createCarouselList(snapshot.data["data"], context);
               } else {
                 return Center(
                   child: Column(
@@ -125,7 +125,6 @@ Widget createCarouselList(List data, BuildContext context) {
               ],
             ),
             onTap: () {
-              print("tested dude");
               Navigator.push(
                   context,
                   MaterialPageRoute(

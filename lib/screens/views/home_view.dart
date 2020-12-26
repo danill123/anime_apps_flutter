@@ -1,3 +1,4 @@
+import 'package:anime_apps_flutter/screens/views/ListAnime.dart';
 import 'package:flutter/material.dart';
 import 'TrendingAnime.dart';
 
@@ -17,7 +18,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _listPage = <Widget>[TrendingAnime(), Text("data 2")];
+    final _listPage = <Widget>[TrendingAnime(), ListAnime()];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(

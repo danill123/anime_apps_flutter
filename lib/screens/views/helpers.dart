@@ -11,7 +11,7 @@ class Network {
     Response response = await get(Uri.encodeFull(url));
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      return data["data"];
+      return data;
     } else {
       print(response.statusCode);
     }

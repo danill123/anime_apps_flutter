@@ -1,5 +1,8 @@
+import 'package:anime_apps_flutter/screens/views/TrendingDetailPage.dart';
 import 'package:flutter/material.dart';
-import 'package:anime_apps_flutter/screens/views/helpers.dart';
+// import 'package:anime_apps_flutter/screens/views/helpers.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 class ListAnime extends StatefulWidget {
   @override
@@ -7,106 +10,75 @@ class ListAnime extends StatefulWidget {
 }
 
 class _ListAnimeState extends State<ListAnime> {
-  Future data;
-  String next_api = '';
   ScrollController _scrollController = new ScrollController();
+  List anime_list = new List();
+  int incr_api = 0;
 
   @override
   void initState() {
     super.initState();
-    data = getData();
+    this._getMoreData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        print('tested dude'); // works dude
+        this._getMoreData();
       }
     });
   }
 
   @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-            child: FutureBuilder(
-          future: data,
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              next_api = snapshot.data["links"]["next"];
-              return ListAnime(snapshot.data["data"], context);
-            } else {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    new SizedBox(height: 15.0),
-                    Text("Make sure your internet connection stable"),
-                    new SizedBox(height: 5.0),
-                    Text("pastikan koneksi internet stabil")
-                  ],
-                ),
-              );
-            }
-          },
-        )),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              data = getData();
-            });
-          },
-          child: Icon(Icons.arrow_forward_ios),
-          backgroundColor: Colors.green,
-        ));
+    return new Scaffold(
+        appBar: AppBar(
+          title: Text('Infinite Scrolling'),
+        ),
+        body: ListAnime(anime_list, context)
+        // body: FutureBuilder(future: null, builder: null),
+        );
   }
 
-  Future getData() async {
-    var data;
-    String url;
-
-    if (next_api.isEmpty) {
-      url = "https://kitsu.io/api/edge/anime";
-    } else {
-      url = next_api;
+  void _getMoreData() async {
+    String url =
+        "https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=${incr_api.toString()}";
+    // "https://kitsu.io/api/edge/manga?page[limit]=10&page[offset]=${incr_api.toString()}"; api for manga
+    Response response = await get(Uri.encodeFull(url));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      setState(() {
+        incr_api += 10;
+        anime_list.addAll(data["data"]);
+      });
+      print(incr_api);
     }
-
-    Network network = Network(url);
-    data = network.fetchData();
-    return data;
   }
-  /*
-  floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Add your onPressed code here!
-            incr++;
-            print(incr);
-          },
-          child: Icon(Icons.arrow_forward_ios),
-          backgroundColor: Colors.green,
-  )
-  */
 
   Widget ListAnime(List data, BuildContext context) {
-    return ListView.builder(
-        controller: _scrollController,
-        itemCount: data.length,
-        itemBuilder: (context, int index) {
-          return Card(
-            child: ListTile(
-              leading: Image.network(
-                  data[index]["attributes"]["posterImage"]["medium"]),
-              title: Text(data[index]["attributes"]["titles"]["en_jp"]),
-              subtitle: Text(data[index]["attributes"]["canonicalTitle"]),
-              isThreeLine: true,
-            ),
-          );
-        });
+    if (data == null) {
+      return CircularProgressIndicator();
+    } else {
+      return ListView.builder(
+          controller: _scrollController,
+          itemCount: data.length,
+          itemBuilder: (context, int index) {
+            return InkWell(
+              child: Card(
+                child: ListTile(
+                  leading: Image.network(
+                      data[index]["attributes"]["posterImage"]["medium"]),
+                  title: Text(data[index]["attributes"]["titles"]["en_jp"]),
+                  subtitle: Text(data[index]["attributes"]["canonicalTitle"]),
+                  isThreeLine: true,
+                ),
+              ),
+              onTap: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TrendingDetailPage(data_list: data[index])))
+              },
+            );
+          });
+    }
   }
 }

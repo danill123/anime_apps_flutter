@@ -1,6 +1,5 @@
 import 'package:anime_apps_flutter/screens/views/TrendingDetailPage.dart';
 import 'package:flutter/material.dart';
-// import 'package:anime_apps_flutter/screens/views/helpers.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
@@ -69,7 +68,7 @@ class _ListAnimeState extends State<ListAnime> {
               child: Card(
                 child: ListTile(
                   leading: Image.network(
-                      data[index]["attributes"]["posterImage"]["medium"]),
+                      data[index]["attributes"]["posterImage"]["small"]),
                   title: Text(data[index]["attributes"]["titles"]["en_jp"]),
                   subtitle: Text(data[index]["attributes"]["canonicalTitle"]),
                   isThreeLine: true,

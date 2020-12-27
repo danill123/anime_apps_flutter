@@ -30,7 +30,13 @@ class _ListAnimeState extends State<ListAnime> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: AppBar(
-          title: Text('Infinite Scrolling'),
+          title: Text(
+            "100+ list anime",
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.white,
         ),
         body: ListAnime(anime_list, context)
         // body: FutureBuilder(future: null, builder: null),
@@ -48,7 +54,6 @@ class _ListAnimeState extends State<ListAnime> {
         incr_api += 10;
         anime_list.addAll(data["data"]);
       });
-      print(incr_api);
     }
   }
 

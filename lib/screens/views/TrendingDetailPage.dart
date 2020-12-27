@@ -18,9 +18,9 @@ class TrendingDetailPage extends StatelessWidget {
                   new SizedBox(height: 20.0),
                   ClipRRect(
                     child: Image.network(
-                      data_list["attributes"]["posterImage"]["small"] ??
+                      data_list["attributes"]["coverImage"]["original"] ??
                           'https://via.placeholder.com/400x200',
-                      width: 200,
+                      fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(16.0)),
                   ),

@@ -1,6 +1,6 @@
+import 'package:anime_apps_flutter/screens/views/About.dart';
 import 'package:anime_apps_flutter/screens/views/ListAnime.dart';
 import 'package:anime_apps_flutter/screens/views/ListManga.dart';
-import 'package:anime_apps_flutter/screens/views/List_character.dart';
 import 'package:flutter/material.dart';
 import 'TrendingAnime.dart';
 
@@ -24,8 +24,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
       TrendingAnime(),
       ListAnime(),
       ListManga(),
-      List_Character(),
-      Text("developer contact")
+      About()
     ];
 
     final _bottomNavBarItems = <BottomNavigationBarItem>[
@@ -35,10 +34,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
           icon: Icon(Icons.list), title: Text('list anime')),
       BottomNavigationBarItem(
           icon: Icon(Icons.book), title: Text('list manga')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.people_alt), title: Text('list character')),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.contact_phone), title: Text('developer contact')),
+      BottomNavigationBarItem(icon: Icon(Icons.info), title: Text('About')),
     ];
 
     final _bottomNavBar = BottomNavigationBar(

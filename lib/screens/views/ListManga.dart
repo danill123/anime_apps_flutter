@@ -78,6 +78,7 @@ class _ListMangaState extends State<ListManga> {
                       child: new Image.network(
                         data[index]["attributes"]["posterImage"]["original"] ??
                             'https://via.placeholder.com/400x200',
+                        fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: new Radius.circular(16.0),
